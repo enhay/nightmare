@@ -165,6 +165,20 @@ Wait until the `fn` evaluated on the page returns `value`. Optionally, refresh t
 
 #### .use(plugin)
 Useful for using repeated code blocks, see the example with Swiftly login and task creation in the docs above.
+### .cbuse(plugin)
+like .use but use in callback, it insert the plugin's functions at the beginning of the queue 
+```js
+new Nightmare().goto('http://www.baidu.com').exist('a[href="http://tieba.baidu.com"]',fuction(){
+    //if we use 'use' will get the  screen after the  jump;
+    nightmare.cbuse(screenbeforeJump());
+}).click('a[href="http://tieba.baidu.com"]').wait().run();
+
+function screenbeforeJump(){
+    return function(nightmare){
+      nightmare.screenshot('./page.png');
+    }
+}
+```
 
 #### .run(cb)
 Executes the queue of functions, and calls your `cb` when the script hits an error or completes the queue. The callback signature is `cb(err, nightmare)`.
